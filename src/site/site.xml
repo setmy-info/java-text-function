@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/DECORATION/1.8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 https://maven.apache.org/xsd/decoration-1.8.0.xsd"
+         name="java-text-function">
+
+    <bannerLeft>
+        <name>java-text-function</name>
+        <href>https://github.com/setmy-info/java-text-function</href>
+    </bannerLeft>
+
+    <body>
+        <links>
+            <item name="APT Format" href="http://maven.apache.org/doxia/references/apt-format.html"/>
+            <item name="Markdown" href="https://maven.apache.org/doxia/modules/index.html#Markdown"/>
+        </links>
+        <menu name="Library">
+            <item name="Index" href="index.html"/>
+            <item name="Build" href="build.html"/>
+        </menu>
+        <menu ref="reports"/>
+    </body>
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.11.2</version>
+    </skin>
+</project>
