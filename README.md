@@ -46,6 +46,12 @@ namespaces.register(
 
 * mvnw org.pitest:pitest-maven:mutationCoverage site:site
 
+## Release
+
+```shell
+./mvnw release:prepare
+```
+
 ## TODO
 
 1. Language support for a) text functions, b) some data transform/convert (boolean: yes, no, jah, ei, ...).
