@@ -3,18 +3,18 @@ package info.setmy.textfunctions.register;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
 
 @Getter
@@ -24,12 +24,13 @@ import static java.util.Optional.ofNullable;
 @RequiredArgsConstructor
 public class DataTypeRegistration {
 
-    private Optional<String> optionalNamespaceName = empty();
+    private Optional<String> optionalNamespaceName;
 
-    private Optional<String> optionalKeyword = empty();
+    private Optional<String> optionalKeyword;
 
-    private Optional<Function<String, Object>> optionalFunction = empty();
+    private Optional<Function<String, Object>> optionalFunction;
 
+    @Default
     @SuppressFBWarnings(
         value = {"EI_EXPOSE_REP", "EI_EXPOSE_REP2"},
         justification = "Trying to avoid null pointer errors, so value should exist."
@@ -54,7 +55,7 @@ public class DataTypeRegistration {
         }
 
         public DataTypeRegistrationBuilder synonyms(final String... synonyms) {
-            this.synonymsList = unmodifiableList(Arrays.asList(synonyms));
+            this.synonymsList$value = unmodifiableList(asList(synonyms));
             return this;
         }
     }

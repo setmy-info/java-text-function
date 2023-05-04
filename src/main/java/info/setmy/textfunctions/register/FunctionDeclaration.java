@@ -9,7 +9,6 @@ import lombok.Setter;
 
 import java.util.Optional;
 
-import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
 
 @Getter
@@ -19,11 +18,11 @@ import static java.util.Optional.ofNullable;
 @RequiredArgsConstructor
 public class FunctionDeclaration {
 
-    private Optional<String> optionalNamespaceName = empty();
+    private Optional<String> optionalNamespaceName;
 
-    private Optional<String> optionalFunctionTemplate = empty();
+    private Optional<String> optionalFunctionTemplate;
 
-    private Optional<TextFunction> optionalTextFunction = empty();
+    private Optional<TextFunction> optionalTextFunction;
 
     public static class FunctionDeclarationBuilder {
 

@@ -28,7 +28,7 @@
         <junit.platform.version>1.9.2</junit.platform.version>
         <mockito.version>5.3.1</mockito.version>
         <assertj.version>3.24.2</assertj.version>
-        <jacoco.version>0.8.9</jacoco.version>
+        <jacoco.version>0.8.10</jacoco.version>
         <failsafe.version>3.0.0</failsafe.version>
         <surefire.version>3.0.0</surefire.version>
         <!--log4j.verion>1.2.17</log4j.verion -->
@@ -248,7 +248,6 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.version}</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
@@ -317,7 +316,6 @@
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.13</version>
                 <extensions>true</extensions>
                 <configuration>
                     <serverId>ossrh</serverId>
