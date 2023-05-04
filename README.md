@@ -57,11 +57,7 @@ namespaces.register(
 ```
 
 ```shell
-./mvnw verify -P sign
-```
-
-```shell
-./mvnw clean deploy
+./mvnw deploy -Psign
 ```
 
 ## TODO
