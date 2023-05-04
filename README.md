@@ -52,6 +52,14 @@ namespaces.register(
 ./mvnw release:prepare
 ```
 
+```shell
+./mvnw mvn verify -P sign
+```
+
+```shell
+./mvnw clean install && ./mvnw org.pitest:pitest-maven:mutationCoverage site:site && ./mvnw clean deploy
+```
+
 ## TODO
 
 1. Language support for a) text functions, b) some data transform/convert (boolean: yes, no, jah, ei, ...).
