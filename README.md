@@ -46,6 +46,12 @@ namespaces.register(
 
 * mvnw org.pitest:pitest-maven:mutationCoverage site:site
 
+## Development version starting
+
+```shell
+./mvnw release:update-versions -DautoVersionSubmodules=true -DdevelopmentVersion=1.1.0-SNAPSHOT
+```
+
 ## Release
 
 ```shell
