@@ -53,11 +53,15 @@ namespaces.register(
 ```
 
 ```shell
-./mvnw mvn verify -P sign
+./mvnw clean install && ./mvnw org.pitest:pitest-maven:mutationCoverage site:site
 ```
 
 ```shell
-./mvnw clean install && ./mvnw org.pitest:pitest-maven:mutationCoverage site:site && ./mvnw clean deploy
+./mvnw verify -P sign
+```
+
+```shell
+./mvnw clean deploy
 ```
 
 ## TODO
