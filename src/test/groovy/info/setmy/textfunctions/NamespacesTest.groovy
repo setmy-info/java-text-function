@@ -51,7 +51,7 @@ class NamespacesTest {
     void functionAndCall() {
         namespaces.declare(
             DataTypeRegistration.builder()
-                .namespaceName(null)
+                .namespaceName(null) // Goes to default namespace
                 .keyword("custom")
                 .synonyms("cust", "cus")
                 .function { "#" + it + "#" }
@@ -60,20 +60,27 @@ class NamespacesTest {
 
         namespaces.declare(
             FunctionDeclaration.builder()
-                .namespaceName()
                 .functionTemplate(FUNCTION_TEMPLATE_STRING)
                 .function {
                     final Parameters parameters = it.getParameters()
-                    final String a = (String) parameters.get(0).get().getOptionalValue().orElse("x")
-                    final String b = (String) parameters.get(1).get().getOptionalValue().orElse("y")
-                    final String c = (String) parameters.get(2).get().getOptionalValue().orElse("z")
+                    assert parameters.arePresent() == true
+                    assert parameters.isPresent() == true
+                    assert parameters.isEmpty() == false
+                    final String a = (String) parameters[0].get().getOptionalValue().orElse("x")
+                    final String b = (String) parameters[1].get().getOptionalValue().orElse("y")
+                    final String c = (String) parameters.getParameter(2).getValue("z")
                     return newReturn(a + " " + b + " " + c)
                 }
                 .build()
         )
 
         final Return returnValue = namespaces.call(null, FUNCTION_CALL_STRING)
-        assertThat(returnValue.get(0).getOptionalValue().get()).isEqualTo("AT PLACEHOLDER PLACES AND ANOTHER #CUSTOM DATA TYPE#")
+        assertThat(returnValue[0].get().value).isEqualTo("AT PLACEHOLDER PLACES AND ANOTHER #CUSTOM DATA TYPE#")
+        assertThat(returnValue[0].get().getValue()).isEqualTo("AT PLACEHOLDER PLACES AND ANOTHER #CUSTOM DATA TYPE#")
+        assertThat(returnValue[0].get().getValue("default value")).isEqualTo("AT PLACEHOLDER PLACES AND ANOTHER #CUSTOM DATA TYPE#")
+        assertThat(returnValue.getReturnValue(0).value).isEqualTo("AT PLACEHOLDER PLACES AND ANOTHER #CUSTOM DATA TYPE#")
+        assertThat(returnValue.getReturnValue(0).getValue()).isEqualTo("AT PLACEHOLDER PLACES AND ANOTHER #CUSTOM DATA TYPE#")
+        assertThat(returnValue.getReturnValue(0).getValue("default value")).isEqualTo("AT PLACEHOLDER PLACES AND ANOTHER #CUSTOM DATA TYPE#")
     }
 
     @Test
@@ -88,39 +95,63 @@ class NamespacesTest {
     void differentDataTypes() {
         namespaces.declare(
             FunctionDeclaration.builder()
-                .namespaceName()
                 .functionTemplate(FUNCTION_TEMPLATE_DATA_TYPES)
                 .function {
                     final Parameters parameters = it.getParameters()
+                    assert parameters.arePresent() == true
+                    assert parameters.isEmpty() == false
                     return newReturn(
-                        parameters.get(0).get().getOptionalValue().orElse(null).toString() + " " +
-                            parameters.get(1).get().getOptionalValue().orElse(null) + " " +
-                            parameters.get(2).get().getOptionalValue().orElse(null) + " " +
-                            parameters.get(3).get().getOptionalValue().orElse(null) + " " +
-                            parameters.get(4).get().getOptionalValue().orElse(null) + " " +
-                            parameters.get(5).get().getOptionalValue().orElse(null) + " " +
-                            parameters.get(6).get().getOptionalValue().orElse(null) + " " +
-                            parameters.get(7).get().getOptionalValue().orElse(null) + " " +
-                            parameters.get(8).get().getOptionalValue().orElse(null) + " " +
-                            parameters.get(9).get().getOptionalValue().orElse(null)
+                        parameters[0].get().getOptionalValue().orElse(null).toString() + " " +
+                            parameters[1].get().getOptionalValue().orElse(null) + " " +
+                            parameters[2].get().getOptionalValue().orElse(null) + " " +
+                            parameters[3].get().getOptionalValue().orElse(null) + " " +
+                            parameters[4].get().getOptionalValue().orElse(null) + " " +
+                            parameters[5].get().getOptionalValue().orElse(null) + " " +
+                            parameters[6].get().getOptionalValue().orElse(null) + " " +
+                            parameters[7].get().value + " " +
+                            parameters[8].get().getValue(null) + " " +
+                            parameters[9].get().getValue()
                     )
                 }
                 .build()
         )
 
         final Return returnValue = namespaces.call(null, FUNCTION_CALL_DATA_TYPES)
-        assert returnValue.get(0).getOptionalValue().get() == "A 123 1234 12345 123456.79 1234567.89 true false 1976-12-31T23:59:59 12345678.9"
+        assert returnValue.isPresent() == true
+        assert returnValue.arePresent() == true
+        assert returnValue.isEmpty() == false
+        assert returnValue.getReturnValue(0).value == "A 123 1234 12345 123456.79 1234567.89 true false 1976-12-31T23:59:59 12345678.9"
+    }
+
+    @Test
+    void defaultNamespace() {
+        namespaces.setNamespace("NON-GLOBAL")
+        namespaces.declare(
+            FunctionDeclaration.builder()
+                .functionTemplate("Call to {string}")
+                .function {
+                    final Parameters parameters = it.getParameters()
+                    return newReturn(
+                        "Should call to " + parameters[0].get().getOptionalValue().orElse("Me").toString()
+                    )
+                }
+                .build()
+        )
+
+        assert namespaces.call(null, "Call to Me")[0].get().getOptionalValue()
+            .get() == "Should call to Me"
+        assert namespaces.call("NON-GLOBAL", "Call to You")[0].get().value == "Should call to You"
     }
 
     @Test
     void exampleForREADME() {
         namespaces.declare(
             FunctionDeclaration.builder()
-                .namespaceName(null) // Goes to global or default namespace
                 .functionTemplate("Say {string}") // Template text as function with parameter
                 .function {// Function body
                     Parameters parameters = it.getParameters()
-                    Optional<Parameter> optionalParameter = parameters.get(0)
+                    assert parameters.arePresent() == true
+                    Optional<Parameter> optionalParameter = parameters[0]
                     if (optionalParameter.isPresent()) {
                         Parameter parameter = optionalParameter.get()
                         String parameterString = parameter.getOptionalValue().orElse("")

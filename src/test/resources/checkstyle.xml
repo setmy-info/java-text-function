@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.2//EN" "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
+<!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.2//EN"
+    "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
 
 <module name="Checker">
     <!-- module name="NewlineAtEndOfFile"/ -->
@@ -67,6 +68,12 @@
         <module name="FinalParameters"/>
         <module name="TodoComment"/>
         <module name="UpperEll"/>
+        <!-- looks like not working
+            module name="CyclomaticComplexity">
+            <property name="max" value="4"/>
+            <property name="tokens" value="LITERAL_WHILE, LITERAL_DO"/>
+            <property name="switchBlockAsSingleDecisionPoint" value="true"/>
+        </module-->
     </module>
     <module name="SuppressWarningsFilter"/>
     <module name="UniqueProperties"/>

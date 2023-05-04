@@ -44,7 +44,7 @@ public class TemplateFunctionMapper {
             throw new FunctionNotFoundException("No matching function for: " + text);
         }
         foundFunctions.forEach(templateTemplateFunctionEntry -> {
-            log.info(
+            log.debug(
                 "Found placeholder for: {} {}",
                 text,
                 templateTemplateFunctionEntry.getKey().getTemplateString()

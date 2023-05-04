@@ -38,31 +38,31 @@ public class TextFunctionMapperTest {
         });
         templateFunctionMapper.register(STRING, context -> {
             System.out.println(STRING + " called with: " + context);
-            return newReturn(context.getParameters().get(0).get());
+            return newReturn(context.getParameters().getAt(0).get());
         });
         templateFunctionMapper.register(STRING_DEF, context -> {
             System.out.println(STRING_DEF + " called with: " + context);
-            return newReturn(context.getParameters().get(0).get());
+            return newReturn(context.getParameters().getAt(0).get());
         });
         templateFunctionMapper.register(ABC_STRING, context -> {
             System.out.println(ABC_STRING + " called with: " + context);
-            return newReturn(context.getParameters().get(0).get());
+            return newReturn(context.getParameters().getAt(0).get());
         });
         templateFunctionMapper.register(ABC_STRING_LMN, context -> {
             System.out.println(ABC_STRING_LMN + " called with: " + context);
-            return newReturn(context.getParameters().get(0).get());
+            return newReturn(context.getParameters().getAt(0).get());
         });
         templateFunctionMapper.register(STRING_DEFGHIJK_STRING, context -> {
             System.out.println(STRING_DEFGHIJK_STRING + " called with: " + context);
-            return newReturn(context.getParameters().get(0).get());
+            return newReturn(context.getParameters().getAt(0).get());
         });
         templateFunctionMapper.register(
             TEMPLATE_STRING,
             parameters ->
                 newReturn(
-                    parameters.getParameters().get(0).get() +
-                        "/" + parameters.getParameters().get(1).get() +
-                        "/" + parameters.getParameters().get(2).get()
+                    parameters.getParameters().getAt(0).get() +
+                        "/" + parameters.getParameters().getAt(1).get() +
+                        "/" + parameters.getParameters().getAt(2).get()
                 )
         );
     }

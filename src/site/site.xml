@@ -17,6 +17,7 @@
         <menu name="Library">
             <item name="Index" href="index.html"/>
             <item name="Build" href="build.html"/>
+            <item name="Clojure" href="clojure.html"/>
         </menu>
         <menu ref="reports"/>
     </body>

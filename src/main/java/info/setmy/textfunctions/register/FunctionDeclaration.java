@@ -1,8 +1,8 @@
 package info.setmy.textfunctions.register;
 
 import info.setmy.textfunctions.functions.TextFunction;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -15,30 +15,32 @@ import static java.util.Optional.ofNullable;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
 @RequiredArgsConstructor
 public class FunctionDeclaration {
 
-    private Optional<String> optionalNamespaceName = empty();
+    @Default
+    private final Optional<String> optionalNamespaceName = empty();
 
-    private Optional<String> optionalFunctionTemplate = empty();
+    @Default
+    private final Optional<String> optionalFunctionTemplate = empty();
 
-    private Optional<TextFunction> optionalTextFunction = empty();
+    @Default
+    private final Optional<TextFunction> optionalTextFunction = empty();
 
     public static class FunctionDeclarationBuilder {
 
         public FunctionDeclarationBuilder namespaceName(final String namespaceName) {
-            this.optionalNamespaceName = ofNullable(namespaceName);
+            this.optionalNamespaceName(ofNullable(namespaceName));
             return this;
         }
 
         public FunctionDeclarationBuilder functionTemplate(final String functionTemplate) {
-            this.optionalFunctionTemplate = ofNullable(functionTemplate);
+            this.optionalFunctionTemplate(ofNullable(functionTemplate));
             return this;
         }
 
         public FunctionDeclarationBuilder function(final TextFunction textFunction) {
-            this.optionalTextFunction = ofNullable(textFunction);
+            this.optionalTextFunction(ofNullable(textFunction));
             return this;
         }
     }
