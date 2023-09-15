@@ -16,6 +16,10 @@ public class KeyValue<L, R> {
 
     private final R value;
 
+    public R getValue(final R defaultValue) {
+        return getOptionalValue().orElse(defaultValue);
+    }
+
     public Optional<L> getOptionalKey() {
         return ofNullable(key);
     }

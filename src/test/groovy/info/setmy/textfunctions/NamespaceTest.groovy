@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows
 
 class NamespaceTest {
 
-    public static final String NAMESPACE_NAME = "default namespace"
+    public static final String NAMESPACE_NAME = "some namespace"
     public static final String FUNCTION_TEMPLATE_STRING = "This is function template string with values {string}, {string} and {custom}."
     public static final String FUNCTION_CALL_STRING = "This is function template string with values AT PLACEHOLDER PLACES, AND ANOTHER and CUSTOM DATA TYPE."
 
@@ -33,21 +33,23 @@ class NamespaceTest {
             .build()
         )
 
-        namespace.register(
-            FunctionDeclaration.builder()
-                .functionTemplate(FUNCTION_TEMPLATE_STRING)
-                .function {
-                    final Parameters parameters = it.getParameters()
-                    final String a = (String) parameters.get(0).get().getOptionalValue().orElse("x")
-                    final String b = (String) parameters.get(1).get().getOptionalValue().orElse("y")
-                    final String c = (String) parameters.get(2).get().getOptionalValue().orElse("z")
-                    return Return.newReturn(a + " " + b + " " + c)
-                }
-                .build()
-        )
+        FunctionDeclaration functionDeclaration = FunctionDeclaration.builder()
+            .functionTemplate(FUNCTION_TEMPLATE_STRING)
+            .function {
+                final Parameters parameters = it.getParameters()
+                final String a = (String) parameters[0].get().getValue()
+                final String b = (String) parameters[1].get().getValue("Y")
+                final String c = (String) parameters[2].get().getOptionalValue().orElse("z")
+                return Return.newReturn(a + " " + b + " " + c)
+            }
+            .build();
+
+        namespace.register(functionDeclaration)
 
         final Return returnValue = namespace.call(FUNCTION_CALL_STRING)
-        assertThat(returnValue.get(0).getOptionalValue().get()).isEqualTo("AT PLACEHOLDER PLACES AND ANOTHER #CUSTOM DATA TYPE#")
+        assertThat(returnValue[0].get().getValue()).isEqualTo("AT PLACEHOLDER PLACES AND ANOTHER #CUSTOM DATA TYPE#")
+        assertThat(returnValue[0].get().getValue("xyz")).isEqualTo("AT PLACEHOLDER PLACES AND ANOTHER #CUSTOM DATA TYPE#")
+        assertThat(returnValue[0].get().value).isEqualTo("AT PLACEHOLDER PLACES AND ANOTHER #CUSTOM DATA TYPE#")
     }
 
     @Test

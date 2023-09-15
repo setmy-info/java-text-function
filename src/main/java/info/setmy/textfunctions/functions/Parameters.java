@@ -15,10 +15,30 @@ public class Parameters {
         return parameterList.add(parameter);
     }
 
-    public Optional<Parameter> get(final int index) {
+    public Parameter getParameter(final int index) {
+        return this.getAt(index).orElse(null);
+    }
+
+    public Optional<Parameter> getAt(final int index) {
         if (index >= parameterList.size()) {
             return empty();
         }
         return of(parameterList.get(index));
+    }
+
+    public int size() {
+        return parameterList.size();
+    }
+
+    public boolean isPresent() {
+        return arePresent();
+    }
+
+    public boolean arePresent() {
+        return !isEmpty();
+    }
+
+    public boolean isEmpty() {
+        return parameterList.isEmpty();
     }
 }

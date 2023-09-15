@@ -19,28 +19,32 @@ public class Namespaces {
 
     private final Namespace global = new Namespace(GLOBAL);
 
+    private Namespace defaultNamespace;
+
     public Namespaces() {
         namespaces.put(GLOBAL, global);
+        defaultNamespace = global;
+    }
+
+    public void setNamespace(final String namespaceName) {
+        defaultNamespace = onDemandCreateAndGet(namespaceName).orElse(global);
     }
 
     public void declare(final DataTypeRegistration dataTypeRegistration) {
-        onDemandCreateAndGet(dataTypeRegistration.getOptionalNamespaceName().orElse(null))
+        onDemandCreateAndGet(dataTypeRegistration.getOptionalNamespaceName().orElse(defaultNamespace.getName()))
             .ifPresent(namespace -> namespace.register(dataTypeRegistration));
     }
 
     public void declare(final FunctionDeclaration functionDeclaration) {
         onDemandCreateAndGet(
-            functionDeclaration.getOptionalNamespaceName()
-                .orElse(null)
+            functionDeclaration.getOptionalNamespaceName().orElse(defaultNamespace.getName())
         ).ifPresent(
             namespace -> namespace.register(functionDeclaration)
         );
     }
 
     public Return call(final String functionText) {
-        final LambdaReturn<Return> lambdaReturn = new LambdaReturn<>(new Return());
-        onDemandCreateAndGet(null).ifPresent(namespace -> lambdaReturn.setValue(namespace.call(functionText)));
-        return lambdaReturn.getValue().get();
+        return call(defaultNamespace.getName(), functionText);
     }
 
     public Return call(final String namespaceName, final String functionText) {
@@ -64,7 +68,7 @@ public class Namespaces {
 
     private Optional<Namespace> get(final String name) {
         if (isNull(name)) {
-            return of(global);
+            return of(defaultNamespace);
         }
         return ofNullable(namespaces.get(name));
     }
