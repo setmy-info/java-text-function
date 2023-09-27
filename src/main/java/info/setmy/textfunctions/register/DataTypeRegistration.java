@@ -14,7 +14,6 @@ import java.util.function.Function;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
 
 @Getter

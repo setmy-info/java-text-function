@@ -9,7 +9,6 @@ import lombok.Setter;
 
 import java.util.Optional;
 
-import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
 
 @Getter
