@@ -36,7 +36,7 @@
         <logback.verion>1.4.7</logback.verion>
         <slf4j.version>2.0.7</slf4j.version>
         <lucene.version>9.5.0</lucene.version>
-        <groovy.version>4.0.11</groovy.version>
+        <groovy.version>4.0.17</groovy.version>
         <cucumber.version>7.11.2</cucumber.version>
         <pitest.version>1.13.0</pitest.version>
         <jersey.version>3.1.1</jersey.version>
